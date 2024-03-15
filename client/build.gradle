@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    from configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    archivesBaseName = 'ServantClient'
+    manifest {
+        attributes 'Implementation-Title': 'Servant Client',
+                   'Implementation-Version': version,
+                   'Main-Class': 'de.fabiexe.servant.client.ServantClient'
+    }
+}
+
+application {
+    mainClass = jar.manifest.attributes['Main-Class'] as String
+}

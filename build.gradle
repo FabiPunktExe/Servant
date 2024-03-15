@@ -1,0 +1,24 @@
+plugins {
+    id 'com.diffplug.spotless' version '6.24.0'
+}
+
+group = 'de.fabiexe'
+
+repositories {
+    mavenCentral()
+}
+
+spotless {
+    java {
+        target '**/src/**/*.java'
+        googleJavaFormat().aosp()
+        removeUnusedImports()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
+
+subprojects {
+    version = rootProject.version
+    group = rootProject.group
+}
